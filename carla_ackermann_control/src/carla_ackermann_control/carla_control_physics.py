@@ -199,14 +199,32 @@ def get_vehicle_max_steering_angle(vehicle_info):
     :return: maximum steering angle [radians]
     :rtype: float64
     """
-    # 70 degrees is the default max steering angle of a car
+    # 70 degrees is the default max steering angle of a car in carla
     max_steering_angle = math.radians(70)
-    # get max steering angle (use smallest non-zero value of all wheels)
-    for wheel in vehicle_info.wheels:
-        if wheel.max_steer_angle:
-            if wheel.max_steer_angle and wheel.max_steer_angle < max_steering_angle:
-                max_steering_angle = wheel.max_steer_angle
-    return max_steering_angle
+    # get max steering, wheelbase and track width
+    # front wheel have a positive x value in vehicle coosy
+    if vehicle_info.wheels:
+        for wheel in vehicle_info.wheels:
+            # front wheels (x value always positive in vehicle coosy)
+            if wheel.position.x > 0.0 and wheel.max_steer_angle: 
+                if wheel.max_steer_angle < max_steering_angle:
+                    max_steering_angle = wheel.max_steer_angle
+                    x_pos_front = wheel.position.x
+                    y_pos_front = wheel.position.y
+            # rear wheels (x value always negative in vehicle coosy)
+            elif wheel.position.x < 0.0:
+                x_pos_rear = wheel.position.x
+        # wheelbase
+        wheelbase = math.fabs(x_pos_front) + math.fabs(x_pos_rear)
+        # track width
+        track_width = math.fabs(2 * y_pos_front)
+        # calculate steer angle of curve outer wheel assuming max_steering_angle at curve inner wheel
+        max_steering_angle_inner = max_steering_angle
+        max_steering_angle_outer = math.atan(wheelbase / (( wheelbase / math.tan(max_steering_angle_inner)) + track_width ))
+        # average steering angle between curve inner and outer wheel
+        return (max_steering_angle_inner + max_steering_angle_outer) * 0.5
+    else:
+        return max_steering_angle
 
 
 def get_vehicle_max_speed(_):

@@ -22,7 +22,7 @@ class ImuSensor(Sensor):
     Actor implementation details for imu sensor
     """
 
-    def __init__(self, uid, name, parent, relative_spawn_pose, node, carla_actor, synchronous_mode, frame_id):
+    def __init__(self, uid, name, parent, relative_spawn_pose, node, carla_actor, synchronous_mode, frame_id=None):
         """
         Constructor
 

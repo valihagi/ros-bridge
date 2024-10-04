@@ -177,6 +177,7 @@ class ActorFactory(object):
             self._known_actor_ids.append(id_)
         
         self._frame_id_map.update({id_:req.frame_id})
+        print(self._frame_id_map)
         return id_
 
     def destroy_actor(self, uid):

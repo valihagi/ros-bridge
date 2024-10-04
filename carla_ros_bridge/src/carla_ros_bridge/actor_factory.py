@@ -374,7 +374,7 @@ class ActorFactory(object):
             if carla_actor.type_id.startswith("sensor.camera"):
                 if carla_actor.type_id.startswith("sensor.camera.rgb"):
                     actor = RgbCamera(uid, name, parent, spawn_pose, self.node,
-                                      carla_actor, self.sync_mode)
+                                      carla_actor, self.sync_mode, self._frame_id_map[uid])
                 elif carla_actor.type_id.startswith("sensor.camera.depth"):
                     actor = DepthCamera(uid, name, parent, spawn_pose,
                                         self.node, carla_actor, self.sync_mode)
@@ -393,7 +393,7 @@ class ActorFactory(object):
             elif carla_actor.type_id.startswith("sensor.lidar"):
                 if carla_actor.type_id.endswith("sensor.lidar.ray_cast"):
                     actor = Lidar(uid, name, parent, spawn_pose, self.node,
-                                  carla_actor, self.sync_mode)
+                                  carla_actor, self.sync_mode, self._frame_id_map[uid])
                 elif carla_actor.type_id.endswith(
                         "sensor.lidar.ray_cast_semantic"):
                     actor = SemanticLidar(uid, name, parent, spawn_pose,
@@ -404,10 +404,10 @@ class ActorFactory(object):
                               carla_actor, self.sync_mode)
             elif carla_actor.type_id.startswith("sensor.other.gnss"):
                 actor = Gnss(uid, name, parent, spawn_pose, self.node,
-                             carla_actor, self.sync_mode)
+                             carla_actor, self.sync_mode, self._frame_id_map[uid])
             elif carla_actor.type_id.startswith("sensor.other.imu"):
                 actor = ImuSensor(uid, name, parent, spawn_pose, self.node,
-                                  carla_actor, self.sync_mode)
+                                  carla_actor, self.sync_mode, self._frame_id_map[uid])
             elif carla_actor.type_id.startswith("sensor.other.collision"):
                 actor = CollisionSensor(uid, name, parent, spawn_pose,
                                         self.node, carla_actor, self.sync_mode)

@@ -178,6 +178,7 @@ class ActorFactory(object):
         
         self._frame_id_map.update({id_:req.frame_id})
         print(self._frame_id_map)
+        print(f"updated with: {req.frame_id} for object with id: {id_}")
         return id_
 
     def destroy_actor(self, uid):

@@ -372,6 +372,8 @@ class ActorFactory(object):
             else:
                 actor = Vehicle(uid, name, parent, self.node, carla_actor)
         elif carla_actor.type_id.startswith("sensor"):
+            print(f"uid is: {uid}")
+            print(self._frame_id_map)
             if carla_actor.type_id.startswith("sensor.camera"):
                 if carla_actor.type_id.startswith("sensor.camera.rgb"):
                     actor = RgbCamera(uid, name, parent, spawn_pose, self.node,

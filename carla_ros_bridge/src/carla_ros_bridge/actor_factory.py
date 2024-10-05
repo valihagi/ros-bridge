@@ -292,6 +292,7 @@ class ActorFactory(object):
 
     def _create_object(self, uid, type_id, name, attach_to, spawn_pose, carla_actor=None):
         # check that the actor is not already created.
+        uid = uid + 2
         if carla_actor is not None and carla_actor.id in self.actors:
             return None
 
@@ -378,7 +379,7 @@ class ActorFactory(object):
             else:
                 actor = Vehicle(uid, name, parent, self.node, carla_actor)
         elif carla_actor.type_id.startswith("sensor"):
-            print(f"uid is: {uid} and type is: 7{carla_actor.type_id}")
+            print(f"uid is: {uid} and type is: {carla_actor.type_id}")
             print(self._frame_id_map)
             if carla_actor.type_id.startswith("sensor.camera"):
                 if carla_actor.type_id.startswith("sensor.camera.rgb"):

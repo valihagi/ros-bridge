@@ -292,7 +292,6 @@ class ActorFactory(object):
 
     def _create_object(self, uid, type_id, name, attach_to, spawn_pose, carla_actor=None):
         # check that the actor is not already created.
-        uid = uid + 2
         if carla_actor is not None and carla_actor.id in self.actors:
             return None
 

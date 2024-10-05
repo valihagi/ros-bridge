@@ -370,6 +370,8 @@ class ActorFactory(object):
             else:
                 actor = Traffic(uid, name, parent, self.node, carla_actor)
         elif carla_actor.type_id.startswith("vehicle"):
+            print(f"uid is: {uid} and type is: {carla_actor.type_id}")
+            print(self._frame_id_map)
             if carla_actor.attributes.get('role_name')\
                     in self.node.parameters['ego_vehicle']['role_name']:
                 actor = EgoVehicle(
@@ -382,6 +384,9 @@ class ActorFactory(object):
             print(self._frame_id_map)
             if carla_actor.type_id.startswith("sensor.camera"):
                 if carla_actor.type_id.startswith("sensor.camera.rgb"):
+                    if uid not in self._frame_id_map:
+                        print("uid not in map, filling in manually")
+                        self._frame_id_map.update({uid:'camera_front_link'})
                     actor = RgbCamera(uid, name, parent, spawn_pose, self.node,
                                       carla_actor, self.sync_mode, self._frame_id_map[uid])
                 elif carla_actor.type_id.startswith("sensor.camera.depth"):

@@ -106,8 +106,13 @@ class ActorFactory(object):
         # The carla.World.get_actors() method does not return actors that has been spawned in the same frame.
         # This is a known bug and will be fixed in future release of CARLA.
         current_actors = set([actor.id for actor in self.world.get_actors()])
+        print("-----------")
+        print(f"all available actos are: {current_actors}")
         spawned_actors = current_actors - self._active_actors
+        print(f"all spawned actos are: {spawned_actors}")
         destroyed_actors = self._active_actors - current_actors
+        print(f"all destroyed actos are: {destroyed_actors}")
+        print("-----------")
         self._active_actors = current_actors
 
         # Create/destroy actors not managed by the bridge. 

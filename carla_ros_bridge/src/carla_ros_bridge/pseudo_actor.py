@@ -99,7 +99,7 @@ class PseudoActor(object):
         :return: the final topic name of this object
         :rtype: string
         """
-        print(f"prefix is: {self.get_prefix()} for uid: {uid}")
+        print(f"prefix is: {self.get_prefix()} for uid: {self.uid}")
         return "/carla/" + self.get_prefix()
 
     def update(self, frame, timestamp):
